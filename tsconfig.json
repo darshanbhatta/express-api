@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es2017",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "allowJs": true,
+        "moduleResolution": "node",
+        "sourceMap": false,
+        "outDir": "dist",
+        "baseUrl": "./",
+        "paths": {
+            "src/*": [
+                "./src/*",
+            ],
+            "*": [
+                "node_modules/*"
+            ]
+        },
+    },
+    "include": [
+        "src/**/*",
+        "tests/**/*"
+    ],
+}
