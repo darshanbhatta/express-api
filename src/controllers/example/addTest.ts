@@ -1,14 +1,17 @@
 import { Controller, CRequest } from "src/@types/Express";
 import { Response } from "express";
-import { celebrate, Joi, Segments } from "celebrate";
+import { validateRequest } from "src/lib/zodExpressValidator";
+import { z } from "zod";
 
-const _celebrate = celebrate({
-    [Segments.BODY]: {
-        test: Joi.string().required(),
-    },
-});
+const schema = {
+    body: z.object({
+        test: z.string(),
+    }),
+};
 
-async function addTestDocument (req: CRequest, res: Response): Promise<Response> {
+const validator = validateRequest(schema);
+
+async function handler (req: CRequest, res: Response): Promise<Response> {
     const { test } = req.body;
     const db = req.app.get("db");
 
@@ -21,6 +24,6 @@ async function addTestDocument (req: CRequest, res: Response): Promise<Response>
     });
 }
 
-const controller: Controller = [_celebrate, addTestDocument];
+const controller: Controller = [validator, handler];
 
 export default controller;

@@ -4,7 +4,6 @@ import models from "./models";
 interface IDatabase {
     url: string;
     config: ConnectOptions;
-    connection: mongoose.Connection;
     models: typeof models;
     connect: () => Promise<void>;
 }
@@ -12,7 +11,6 @@ interface IDatabase {
 class Database implements IDatabase {
     url: string;
     config: mongoose.ConnectOptions;
-    connection: mongoose.Connection;
     models: typeof models;
 
     constructor ({ url, ...config }) {
@@ -25,7 +23,6 @@ class Database implements IDatabase {
         await mongoose.connect(this.url, {
             ...this.config,
         });
-        this.connection = mongoose.connection;
     }
 }
 
