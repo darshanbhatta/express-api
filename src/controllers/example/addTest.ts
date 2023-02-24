@@ -1,27 +1,29 @@
 import { Controller, CRequest } from "src/@types/Express";
-// import { Response, Router, Request } from "express";
+import { Response } from "express";
 import { validateRequest } from "src/lib/zodExpressValidator";
 import { z } from "zod";
 
 const schema = {
-    params: z.object({
-        urlParameter: z.string(),
-    }),
     body: z.object({
-        bodyKey: z.number(),
-    }),
-    query: z.object({
-        queryKey: z.string().length(64),
+        test: z.string(),
     }),
 };
 
-const validate = validateRequest(schema);
+const validator = validateRequest(schema);
 
-const handler = (req: CRequest, res) => {
-    res.json({
-        params: req.params,
-        body: req.body,
-        query: req.query,
+async function handler (req: CRequest, res: Response): Promise<Response> {
+    const { test } = req.body;
+    const db = req.app.get("db");
+
+    await db.models.tests.create({
+        test,
+    });
+
+    return res.status(200).json({
+        message: "Test added",
     });
 }
 
+const controller: Controller = [validator, handler];
+
+export default controller;
