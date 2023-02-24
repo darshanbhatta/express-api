@@ -1,13 +1,10 @@
-import dotenv from "dotenv";
-dotenv.config();
+import "./env";
 
 import express from "express";
 
 import Database from "./lib/Database";
 
 import routes from "./routes";
-
-import config from "../config";
 
 import initBaseMWs from "./middlewares/initBaseMWs";
 import logger from "./lib/Logger";
@@ -16,8 +13,9 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-const db = new Database(config.db);
-
+const db = new Database({
+    url: process.env.MONGO_URI,
+});
 
 export async function setupApp() {
     initBaseMWs(app);

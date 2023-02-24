@@ -138,6 +138,8 @@
         "node/no-deprecated-api": "error",
         "node/exports-style": ["error", "module.exports"],
         "no-var": "error",
-        "@typescript-eslint/member-delimiter-style": "error"
+        "@typescript-eslint/member-delimiter-style": "error",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-empty-interface": "off"
     }
 }

@@ -2,9 +2,10 @@
     "compilerOptions": {
         "esModuleInterop": true,
         "target": "es2017",
+        "strict": true,
         "module": "commonjs",
         "noImplicitAny": false,
-        "allowJs": true,
+        "allowJs": false,
         "moduleResolution": "node",
         "sourceMap": false,
         "outDir": "dist",

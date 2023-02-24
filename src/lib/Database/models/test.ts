@@ -1,13 +1,14 @@
-import mongoose from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 interface Test {
+    _id: Types.ObjectId;
     test: string;
 }
 
-const testSchema = new mongoose.Schema<Test>({
+const testSchema = new Schema<Test>({
     test: String,
 });
 
-const testModel = mongoose.model<Test>("test", testSchema);
+const testModel = model<Test>("test", testSchema);
 
 export default testModel;

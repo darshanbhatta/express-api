@@ -1,6 +1,6 @@
 import Database from "src/lib/Database";
 import request from "supertest";
-import app, { setupApp } from "../src/app";
+import app, { setupApp } from "../../../src/app";
 
 describe("Test the example routes", () => {
     beforeAll(async () => {

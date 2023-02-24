@@ -1,26 +1,27 @@
 import { Controller, CRequest } from "src/@types/Express";
-import { Response } from "express";
-import { celebrate, Joi, Segments } from "celebrate";
+// import { Response, Router, Request } from "express";
+import { validateRequest } from "src/lib/zodExpressValidator";
+import { z } from "zod";
 
-const _celebrate = celebrate({
-    [Segments.BODY]: {
-        test: Joi.string().required(),
-    },
-});
+const schema = {
+    params: z.object({
+        urlParameter: z.string(),
+    }),
+    body: z.object({
+        bodyKey: z.number(),
+    }),
+    query: z.object({
+        queryKey: z.string().length(64),
+    }),
+};
 
-async function addTestDocument (req: CRequest, res: Response): Promise<Response> {
-    const { test } = req.body;
-    const db = req.app.get("db");
+const validate = validateRequest(schema);
 
-    await db.models.tests.create({
-        test,
-    });
-
-    return res.status(200).json({
-        message: "Test added",
+const handler = (req: CRequest, res) => {
+    res.json({
+        params: req.params,
+        body: req.body,
+        query: req.query,
     });
 }
 
-const controller: Controller = [_celebrate, addTestDocument];
-
-export default controller;

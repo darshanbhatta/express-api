@@ -18,14 +18,13 @@ function initBaseMWs(app: Express) {
 
     app.use(helmet());
     app.use(cors());
-    app.options("*", cors());
 
     app.use(requestIpMiddleware());
 
     app.use("/", defaultLogger);
 }
 
-const ignoreCompressions = [];
+const ignoreCompressions: string[] = [];
 /**
  * Determines if a request should be compressed or not, useful for big payloads that
  * should not be compressed every time
@@ -37,7 +36,7 @@ const shouldCompress = (req: CRequest, res: Response) => {
     return compression.filter(req, res);
 };
 
-const ignoreLogRoutes = ["/"];
+const ignoreLogRoutes: string[] = ["/"];
 /**
  * Default logger middleware, logs all requests besides the ones in ignoreLogRoutes
  */
