@@ -1,5 +1,5 @@
 import request from "supertest";
-import app, { setupApp } from "../../../src/app";
+import app, { setupApp } from "src/app";
 
 describe("Test the root path", () => {
     beforeAll(async () => {
