@@ -217,14 +217,17 @@ export const validateRequest: <TParams = any, TQuery = any, TBody = any>(
         return next();
     };
 
+const EmptySchema = z.object({});
+
+type EmptyType = typeof EmptySchema;
 export function createValidator<T extends ZodRequestSchema>(
     schema: T
 ): [
     requestSchema: T & {
-        body: T["body"] extends any ? z.AnyZodObject : T["body"];
-        response: T["response"] extends any ? z.AnyZodObject : T["response"];
-        params: T["params"] extends any ? z.AnyZodObject : T["params"];
-        query: T["query"] extends any ? z.AnyZodObject : T["query"];
+        body: T extends { body: infer B } ? (B extends z.ZodTypeAny ? B : never) : EmptyType;
+        response: T extends { response: infer R } ? (R extends z.ZodTypeAny ? R : never) : EmptyType;
+        params: T extends { params: infer P } ? (P extends z.ZodTypeAny ? P : never) : EmptyType;
+        query: T extends { query: infer Q } ? (Q extends z.ZodTypeAny ? Q : never) : EmptyType;
     },
     validator: RequestHandler<{}, {}, {}, {}>
 ] {

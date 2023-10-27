@@ -1,4 +1,4 @@
-import { ZRequest, ZResponse } from "express";
+import { ZHandler, ZRequest, ZResponse } from "express";
 import { createValidator } from "src/lib/zodExpressValidator";
 import { z } from "zod";
 
@@ -7,16 +7,13 @@ export const [schema, validator] = createValidator({
     body: z.object({
         test: z.string(),
     }),
-    response: z.object({
-        message: z.string(),
-        potato: z.string().optional(),
-    }),
+    response: z.object({}),
     params: z.object({
-        id: z.string(),
+        id: z.number().int(),
     }),
 });
 
-export async function handler(req: ZRequest<typeof schema>, res: ZResponse<typeof schema>) {
+export const handler: ZHandler<typeof schema> = async (req, res) => {
     const { test } = req.body;
 
     const { db } = req;
@@ -32,4 +29,4 @@ export async function handler(req: ZRequest<typeof schema>, res: ZResponse<typeo
     return res.status(200).json({
         message: "Test added",
     });
-}
+};

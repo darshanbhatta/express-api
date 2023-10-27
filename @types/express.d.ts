@@ -1,6 +1,7 @@
 import Database from "../src/lib/Database";
 import Logger from "../src/lib/Logger";
 import { z } from "zod";
+import { EmptyObject } from "./schema";
 
 declare module "express-serve-static-core" {
     interface Request {
@@ -11,20 +12,25 @@ declare module "express-serve-static-core" {
 
 declare module "express" {
     interface ZodRequestSchema {
-        body?: z.ZodTypeAny;
-        response?: z.ZodTypeAny;
-        params?: z.ZodTypeAny;
-        query?: z.ZodTypeAny;
+        body?: EmptyObject;
+        response?: EmptyObject;
+        params?: EmptyObject;
+        query?: EmptyObject;
     }
 
     type ZRequest<T extends ZodRequestSchema = {}> = Request<
-        z.infer<T["params"] extends z.AnyZodObject ? T["params"] : z.AnyZodObject>,
-        z.infer<T["response"] extends z.AnyZodObject ? T["response"] : z.AnyZodObject>,
-        z.infer<T["body"] extends z.AnyZodObject ? T["body"] : z.AnyZodObject>,
-        z.infer<T["query"] extends z.AnyZodObject ? T["query"] : z.AnyZodObject>
+        z.infer<T extends { params: infer P } ? (P extends z.ZodTypeAny ? P : never) : EmptyObject>,
+        z.infer<T extends { response: infer R } ? (R extends z.ZodTypeAny ? R : never) : EmptyObject>,
+        z.infer<T extends { body: infer B } ? (B extends z.ZodTypeAny ? B : never) : EmptyObject>,
+        z.infer<T extends { query: infer Q } ? (Q extends z.ZodTypeAny ? Q : never) : EmptyObject>
     >;
 
     type ZResponse<T extends ZodRequestSchema = {}> = Response<
-        z.infer<T["response"] extends z.AnyZodObject ? T["response"] : z.AnyZodObject>
+        z.infer<T extends { response: infer R } ? (R extends z.ZodTypeAny ? R : never) : EmptyObject>
     >;
+
+    type ZHandler<T extends ZodRequestSchema = {}> = (
+        req: ZRequest<T>,
+        res: ZResponse<T>
+    ) => Promise<ZResponse<T>> | ZResponse<T>;
 }
