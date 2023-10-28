@@ -1,4 +1,5 @@
 import mongoose, { ConnectOptions } from "mongoose";
+
 import models from "./models";
 
 interface IDatabase {
@@ -13,13 +14,13 @@ class Database implements IDatabase {
     config: mongoose.ConnectOptions;
     models: typeof models;
 
-    constructor ({ url, ...config }) {
+    constructor({ url, ...config }) {
         this.url = url;
         this.config = config;
         this.models = models;
     }
 
-    async connect () {
+    async connect() {
         await mongoose.connect(this.url, {
             ...this.config,
         });

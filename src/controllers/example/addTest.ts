@@ -7,7 +7,11 @@ export const [schema, validator] = createValidator({
     body: z.object({
         test: z.string(),
     }),
-    response: z.object({}),
+    response: z.object({
+        message: z.string({
+            description: "A message",
+        }),
+    }),
     params: z.object({
         id: z.number().int(),
     }),
@@ -16,15 +20,13 @@ export const [schema, validator] = createValidator({
 export async function handler(req: ZRequest<typeof schema>, res: ZResponse<typeof schema>) {
     const { test } = req.body;
 
-    const { db } = req;
+    req.logger.info(req.params.id);
 
-    await db.models.tests.create({
+    await req.db.models.tests.create({
         test,
     });
 
-    res.json({
-        message: "Test added",
-    });
+    req.logger.info("Test added");
 
     return res.status(200).json({
         message: "Test added",
