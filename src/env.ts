@@ -1,5 +1,8 @@
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+dotenv.config({
+    path: path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
+});
 
 import { z } from "zod";
 
@@ -12,10 +15,7 @@ const envSchema = z.object({
     NODE_ENV: z.enum(["development", "production", "test"]),
 
     /** The port that the application will run on. If this is not set then it will use a default number in the code */
-    PORT: z.preprocess(
-        (a) => parseInt(a as string, 10),
-        z.number().positive(),
-    ).optional(),
+    PORT: z.preprocess(a => parseInt(a as string, 10), z.number().positive()).optional(),
 
     /** MongoDB connection string. */
     MONGO_URI: z.string(),

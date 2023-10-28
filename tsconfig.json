@@ -8,6 +8,10 @@
         "allowJs": false,
         "moduleResolution": "node",
         "sourceMap": false,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./@types"
+        ],
         "outDir": "dist",
         "baseUrl": "./",
         "paths": {
@@ -20,6 +24,7 @@
         },
     },
     "include": [
+        "@types/**/*",
         "src/**/*",
         "tests/**/*"
     ],

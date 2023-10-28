@@ -1,4 +1,4 @@
-import addTest from "./addTest";
+import * as addTest from "./addTest";
 
 export default {
     addTest,

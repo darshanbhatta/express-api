@@ -1,9 +1,8 @@
 import express from "express";
-import exampleController from "../controllers/example";
-
+import example from "../controllers/example";
 
 const router = express.Router();
 
-router.post("/add", exampleController.addTest);
+router.get("/add/:id", example.addTest.validator, example.addTest.handler);
 
 export default router;

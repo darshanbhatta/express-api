@@ -6,24 +6,21 @@ import Database from "./lib/Database";
 
 import routes from "./routes";
 
-import initBaseMWs from "./middlewares/initBaseMWs";
+import initializeBaseMiddlewares from "./middlewares";
 import logger from "./lib/Logger";
-
 const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-const db = new Database({
-    url: process.env.MONGO_URI,
-});
-
-export async function setupApp() {
-    initBaseMWs(app);
+export async function setupApp(db: Database) {
+    app.use((req, _, next) => {
+        req.db = db;
+        req.logger = logger;
+        next();
+    });
+    initializeBaseMiddlewares(app);
     // Connect to MongoDB
     await db.connect();
-    app.set("db", db);
-
-    app.set("logger", logger);
 
     app.use("/", routes);
 }
