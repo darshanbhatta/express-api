@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import path from "path";
 dotenv.config({
-    path: path.resolve(__dirname, "../example.env"),
+    path: path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
 });
 
 import { z } from "zod";

@@ -19,11 +19,11 @@ describe("Test the example routes", () => {
         expect(res.status).toBe(200);
 
         // check if the value is in the db
-        const result = await db.models.tests.findOne({ name: randomString });
+        const result = await db.models.tests.findOne({ test: randomString });
         expect(result).toBeTruthy();
 
         // delete the value from the db
-        await db.models.tests.deleteOne({ name: randomString });
+        await db.models.tests.deleteOne({ test: randomString });
     });
 
     afterAll(async () => {
