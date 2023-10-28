@@ -8,7 +8,7 @@
     "docker": "docker compose up",
     "docker:test": "docker compose -f docker-compose-test.yaml up --exit-code-from app",
     "dev": "nodemon --ext \"ts,json,js\" --exec 'npm' start",
-    "test": "jest --colors --coverage --config tests/jest.config.ts"
+    "test": "jest --colors --coverage --config tests/jest.config.ts --detectOpenHandles"
   },
   "author": "",
   "dependencies": {

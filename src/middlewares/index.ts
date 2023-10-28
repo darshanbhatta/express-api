@@ -43,8 +43,7 @@ const ignoreLogRoutes: string[] = ["/"];
  */
 const defaultLogger = (req: Request, res, next: NextFunction) => {
     if (!ignoreLogRoutes.includes(req.originalUrl)) {
-        const logger = req.app.get("logger");
-        logger.log("info", "r", {
+        req.logger.log("info", "r", {
             timestamp: new Date().toISOString(),
             ip: req.clientIp,
             path: req.originalUrl,

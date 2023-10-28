@@ -3,6 +3,6 @@ import example from "../controllers/example";
 
 const router = express.Router();
 
-router.post("/add", example.addTest.validator, example.addTest.handler);
+router.get("/add/:id", example.addTest.validator, example.addTest.handler);
 
 export default router;

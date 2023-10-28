@@ -25,6 +25,11 @@ class Database implements IDatabase {
             ...this.config,
         });
     }
+
+    async disconnect() {
+        await mongoose.disconnect();
+        await mongoose.connection.close();
+    }
 }
 
 export default Database;
