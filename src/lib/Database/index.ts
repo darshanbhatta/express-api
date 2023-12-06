@@ -1,18 +1,11 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose, { ConnectOptions, Model } from "mongoose";
 
-import models from "./models";
+import { IModels, models } from "./models";
 
-interface IDatabase {
-    url: string;
-    config: ConnectOptions;
-    models: typeof models;
-    connect: () => Promise<void>;
-}
-
-class Database implements IDatabase {
+class Database {
     url: string;
     config: mongoose.ConnectOptions;
-    models: typeof models;
+    models: IModels;
 
     constructor({ url, ...config }) {
         this.url = url;

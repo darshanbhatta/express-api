@@ -1,9 +1,6 @@
 import "./env";
-
 import express from "express";
-
 import Database from "./lib/Database";
-
 import routes from "./routes";
 
 import initializeBaseMiddlewares from "./middlewares";
@@ -21,6 +18,12 @@ export async function setupApp(db: Database) {
     initializeBaseMiddlewares(app);
     // Connect to MongoDB
     await db.connect();
+
+    app.get("/", (_, res) =>
+        res.json({
+            message: `${process.env.npm_package_name} connected @ ${new Date().toISOString()}`,
+        })
+    );
 
     app.use("/", routes);
 }

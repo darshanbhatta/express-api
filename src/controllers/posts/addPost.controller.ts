@@ -11,13 +11,14 @@ export const [schema, validator] = createValidator({
 
 export async function handler(req: ZRequest<typeof schema>, res: ZResponse<typeof schema>) {
     const { id } = req.params;
-    await req.db.models.tests.create({
-        test: id,
-    });
+    const { posts } = req.db.models;
 
-    req.logger.info("Test added");
+    // add a new post to the db
+    await posts.create({ title: id, content: "test" });
+
+    req.logger.info("Post added");
 
     return res.status(200).json({
-        message: "Test added",
+        message: "Post added",
     });
 }

@@ -1,15 +1,11 @@
-import express from "express";
-import errorHandling from "../middlewares/error";
-const router = express.Router();
+import { Router } from "express";
+import { postRoutes } from "./posts.routes";
+import { errorMiddleware } from "src/middlewares/error.middleware";
 
-import def from "../controllers/default";
-import example from "./example";
-
-router.get("/", def);
-router.use("/example", example);
+const router = Router();
+router.use("/posts", postRoutes);
 
 router.use((_, res) => res.sendStatus(404));
-
-router.use(errorHandling);
+router.use(errorMiddleware);
 
 export default router;

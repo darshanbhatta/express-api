@@ -1,7 +1,10 @@
-import test from "./test";
+import { Model } from "mongoose";
+import { IPost, PostModel } from "./posts.model";
 
-const models = {
-    tests: test,
+export type IModels = {
+    posts: Model<IPost>;
 };
 
-export default models;
+export const models: IModels = {
+    posts: PostModel,
+};
