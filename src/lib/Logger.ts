@@ -14,8 +14,13 @@ const formatterSpecs = winston.format.combine(
     winston.format.timestamp({ format: timezone }),
     winston.format.metadata({ fillExcept: ["message", "level", "timestamp", "label"] }),
     winston.format.printf(
-        info => `[${info.timestamp}] | ${info.level} : ${info.message} ${info.metadata && Object.keys(info.metadata).length !== 0 ? `\n${JSON.stringify(info.metadata, null, 2)}\n` : ""}`,
-    ),
+        info =>
+            `[${info.timestamp}] | ${info.level} : ${info.message} ${
+                info.metadata && Object.keys(info.metadata).length !== 0
+                    ? `\n${JSON.stringify(info.metadata, null, 2)}\n`
+                    : ""
+            }`
+    )
 );
 
 // creating a new file transport, any logs will be output to a file with the following specs
@@ -27,10 +32,7 @@ const fileTransport = new DailyRotateFile({
     maxFiles: "7d",
 });
 
-const transports: transport[] = [
-    fileTransport,
-    new winston.transports.Console(),
-];
+const transports: transport[] = [fileTransport, new winston.transports.Console()];
 
 const logger = winston.createLogger({
     format: formatterSpecs,

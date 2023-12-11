@@ -160,10 +160,6 @@
             "always"
         ],
         "operator-assignment": "error",
-        "operator-linebreak": [
-            "error",
-            "after"
-        ],
         "padded-blocks": [
             "error",
             "never"
