@@ -1,9 +1,11 @@
 {
+    "$schema": "https://json.schemastore.org/eslintrc",
     "parser": "@typescript-eslint/parser",
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "env": {
         "node": true,
@@ -16,9 +18,13 @@
     "globals": {},
     "plugins": [
         "promise",
-        "node"
+        "node",
+        "prettier"
     ],
     "rules": {
+        "prettier/prettier": [
+            "error"
+        ],
         "no-extra-parens": [
             "warn",
             "all",
@@ -96,13 +102,6 @@
             "declaration",
             {
                 "allowArrowFunctions": true
-            }
-        ],
-        "indent": [
-            "error",
-            4,
-            {
-                "SwitchCase": 1
             }
         ],
         "key-spacing": "error",
