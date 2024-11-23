@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions, Model } from "mongoose";
+import mongoose from "mongoose";
 
 import { IModels, models } from "./models";
 

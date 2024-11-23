@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Src code from https://github.com/Aquila169/zod-express-middleware
  */

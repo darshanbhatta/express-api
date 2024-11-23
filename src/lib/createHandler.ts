@@ -7,9 +7,7 @@ export function createHandler<S extends ZodRequestSchema>(
 ): { validator: Handler; handler: Handler } {
     const [_, validator] = createValidator(schema);
 
-    const typedHandler: Handler = (req, res, next) => {
-        return handler(req as ZRequest<S>, res as ZResponse).catch(next);
-    };
+    const typedHandler: Handler = (req, res) => handler(req as ZRequest<S>, res as ZResponse);
 
     return {
         validator,
