@@ -1,5 +1,5 @@
-import { Handler, ZodRequestSchema, ZRequest, ZResponse } from 'express';
-import { createValidator } from 'src/lib/zodExpressValidator';
+import { Handler, ZodRequestSchema, ZRequest, ZResponse } from "express";
+import { createValidator } from "src/lib/zodExpressValidator";
 
 export function createHandler<S extends ZodRequestSchema>(
     schema: S,

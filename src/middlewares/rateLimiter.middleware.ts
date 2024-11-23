@@ -1,10 +1,10 @@
-import rateLimit, { Options } from 'express-rate-limit';
+import rateLimit, { Options } from "express-rate-limit";
 
 /**
  * Creates a mw for rate limiting
  * Defaults to 100 req/15 mins
- * @param options 
- * @returns 
+ * @param options
+ * @returns
  */
 export function rateLimiter(options?: Partial<Options>) {
     return rateLimit({
