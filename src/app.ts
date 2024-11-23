@@ -1,10 +1,10 @@
 import "./env";
 import express from "express";
 import Database from "./lib/Database";
-import routes from "./routes";
 
 import initializeBaseMiddlewares from "./middlewares";
 import logger from "./lib/Logger";
+import { loadRoutes } from "./lib/routeLoader";
 const app = express();
 
 const PORT = process.env.PORT || 8080;
@@ -25,7 +25,7 @@ export async function setupApp(db: Database) {
         })
     );
 
-    app.use("/", routes);
+    app.use("/", loadRoutes());
 }
 
 export async function startListening() {

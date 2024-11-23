@@ -5,24 +5,19 @@ import { createHandler } from 'src/lib/createHandler';
 
 const { validator, handler } = createHandler({
     params: z.object({
-        id: z.string().min(1),
+        id: z.string().min(3),
     }),
 }, async (req, res) => {
     const { id } = req.params;
-    const { posts } = req.db.models;
-
-    await posts.create({ title: id, content: 'test' });
-
-    req.logger.info('Post added');
 
     return res.status(200).json({
-        message: 'Post added',
+        message: `Hello, ${id}!`,
     });
 });
 
 export const route: RouteConfig = {
     method: "get",
-    path: '/posts/add/:id',
+    path: '/hello/world/:id',
     middlewares: [rateLimiter(), validator],
     handler,
 };

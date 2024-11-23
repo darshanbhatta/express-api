@@ -191,31 +191,31 @@ export const validateRequest: <TParams = any, TQuery = any, TBody = any>(
     schemas: RequestValidation<TParams, TQuery, TBody>
 ) => RequestHandler<TParams, any, TBody, TQuery> =
     ({ params, query, body }) =>
-    (req, res, next) => {
-        const errors: Array<ErrorListItem> = [];
-        if (params) {
-            const parsed = params.safeParse(req.params);
-            if (!parsed.success) {
-                errors.push({ type: "Params", errors: parsed.error });
+        (req, res, next) => {
+            const errors: Array<ErrorListItem> = [];
+            if (params) {
+                const parsed = params.safeParse(req.params);
+                if (!parsed.success) {
+                    errors.push({ type: "Params", errors: parsed.error });
+                }
             }
-        }
-        if (query) {
-            const parsed = query.safeParse(req.query);
-            if (!parsed.success) {
-                errors.push({ type: "Query", errors: parsed.error });
+            if (query) {
+                const parsed = query.safeParse(req.query);
+                if (!parsed.success) {
+                    errors.push({ type: "Query", errors: parsed.error });
+                }
             }
-        }
-        if (body) {
-            const parsed = body.safeParse(req.body);
-            if (!parsed.success) {
-                errors.push({ type: "Body", errors: parsed.error });
+            if (body) {
+                const parsed = body.safeParse(req.body);
+                if (!parsed.success) {
+                    errors.push({ type: "Body", errors: parsed.error });
+                }
             }
-        }
-        if (errors.length > 0) {
-            return sendErrors(errors, res);
-        }
-        return next();
-    };
+            if (errors.length > 0) {
+                return sendErrors(errors, res);
+            }
+            return next();
+        };
 
 const EmptySchema = z.object({});
 
@@ -223,13 +223,13 @@ type EmptyType = typeof EmptySchema;
 export function createValidator<T extends ZodRequestSchema>(
     schema: T
 ): [
-    requestSchema: T & {
-        body: T extends { body: infer B } ? (B extends z.ZodTypeAny ? B : never) : EmptyType;
-        response: T extends { response: infer R } ? (R extends z.ZodTypeAny ? R : never) : EmptyType;
-        params: T extends { params: infer P } ? (P extends z.ZodTypeAny ? P : never) : EmptyType;
-        query: T extends { query: infer Q } ? (Q extends z.ZodTypeAny ? Q : never) : EmptyType;
-    },
-    validator: RequestHandler<{}, {}, {}, {}>
-] {
+        requestSchema: T & {
+            body: T extends { body: infer B } ? (B extends z.ZodTypeAny ? B : never) : EmptyType;
+            response: T extends { response: infer R } ? (R extends z.ZodTypeAny ? R : never) : EmptyType;
+            params: T extends { params: infer P } ? (P extends z.ZodTypeAny ? P : never) : EmptyType;
+            query: T extends { query: infer Q } ? (Q extends z.ZodTypeAny ? Q : never) : EmptyType;
+        },
+        validator: RequestHandler<{}, {}, {}, {}>
+    ] {
     return [schema as any, validateRequest(schema)];
 }
