@@ -1,14 +1,16 @@
-import { RequestHandler, ZRequest, ZResponse } from "express";
+import { RequestHandler, Router } from "express";
 
 export interface RouteConfig {
     method: "get" | "post" | "put" | "delete" | "patch";
     path: string;
     middlewares?: RequestHandler[];
-    handler: any;
+    handler: {
+        handler: RequestHandler;
+        validator: RequestHandler;
+    };
 }
 
 // routeLoader.ts (updated)
-import { Router } from "express";
 import { readdirSync, statSync } from "fs";
 import { join, extname } from "path";
 import logger from "./Logger";
@@ -23,11 +25,12 @@ function loadControllers(dir: string, router: Router) {
         if (fileStat.isDirectory()) {
             loadControllers(filePath, router);
         } else if (extname(file) === ".ts" || extname(file) === ".js") {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const controller = require(filePath);
 
             if (controller && controller.route) {
                 const { method, path, middlewares = [], handler } = controller.route;
-                router[method](path, ...middlewares, handler);
+                router[method](path, handler.validator, ...middlewares, handler.handler);
             } else {
                 logger.warn(`Missing route in ${filePath}`);
             }

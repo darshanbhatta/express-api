@@ -3,7 +3,7 @@ import { rateLimiter } from "src/middlewares/rateLimiter.middleware";
 import { RouteConfig } from "src/lib/routeLoader";
 import { createHandler } from "src/lib/createHandler";
 
-const { validator, handler } = createHandler(
+const handler = createHandler(
     {
         params: z.object({
             id: z.string().min(3),
@@ -21,6 +21,6 @@ const { validator, handler } = createHandler(
 export const route: RouteConfig = {
     method: "get",
     path: "/hello/world/:id",
-    middlewares: [rateLimiter(), validator],
+    middlewares: [rateLimiter()],
     handler,
 };
