@@ -9,7 +9,7 @@ This is a boilerplate for a REST API server using Express.js and MongoDB in Type
     -   [Building and Running](#building-and-running)
 -   [Development](#development)
     -   [Adding New Mongoose Models](#adding-new-mongoose-models)
-    -   [Adding a New Controller](#adding-a-new-controller)
+    -   [Adding a New Route](#adding-a-new-route)
     -   [Testing](#testing)
 
 ## Setting Up
@@ -42,11 +42,11 @@ To add a new collection:
 2. Add a new model file.
 3. Update the `index.ts` file to include your new model.
 
-### Adding a New Controller
+### Adding a New Route
 
-To add a new controller:
+To add a new Route:
 
-1. Create a new file in the `src/controllers` directory.
+1. Create a new file in the `src/routes` directory.
 
 2. Use the following template:
 
@@ -89,7 +89,7 @@ export const route: RouteConfig = {
 
 4. **Registering the Route:**
 
-    - There's no need to manually add the route to your Express app. The `routeLoader` function scans the `src/controllers` directory and registers all exported routes.
+    - There's no need to manually add the route to your Express app. The `routeLoader` function scans the `src/routes` directory and registers all exported routes.
 
 5. **Using Middlewares:**
 

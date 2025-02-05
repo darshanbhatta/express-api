@@ -1,4 +1,7 @@
 import { RequestHandler, Router } from "express";
+import { readdirSync, statSync } from "fs";
+import { join, extname } from "path";
+import logger from "./Logger";
 
 export interface RouteConfig {
     method: "get" | "post" | "put" | "delete" | "patch";
@@ -10,12 +13,19 @@ export interface RouteConfig {
     };
 }
 
-// routeLoader.ts (updated)
-import { readdirSync, statSync } from "fs";
-import { join, extname } from "path";
-import logger from "./Logger";
+export function loadRoutes(): Router {
+    const router = Router();
+    const routesPath = "src/routes";
 
-function loadControllers(dir: string, router: Router) {
+    registerRouteHandlers(routesPath, router);
+
+    const routeCount = router.stack.length;
+    logger.info(`${routeCount} route${routeCount === 1 ? "" : "s"} loaded`);
+
+    return router;
+}
+
+function registerRouteHandlers(dir: string, router: Router) {
     const files = readdirSync(dir);
 
     files.forEach(file => {
@@ -23,29 +33,17 @@ function loadControllers(dir: string, router: Router) {
         const fileStat = statSync(filePath);
 
         if (fileStat.isDirectory()) {
-            loadControllers(filePath, router);
+            registerRouteHandlers(filePath, router);
         } else if (extname(file) === ".ts" || extname(file) === ".js") {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const controller = require(filePath);
+            const routeHandler = require(filePath);
 
-            if (controller && controller.route) {
-                const { method, path, middlewares = [], handler } = controller.route;
+            if (routeHandler?.route) {
+                const { method, path, middlewares = [], handler } = routeHandler.route;
                 router[method](path, handler.validator, ...middlewares, handler.handler);
             } else {
                 logger.warn(`Missing route in ${filePath}`);
             }
         }
     });
-}
-
-export function loadRoutes(): Router {
-    const router = Router();
-    const controllersPath = "src/controllers";
-
-    loadControllers(controllersPath, router);
-
-    const routeCount = router.stack.length;
-    logger.info(`${routeCount} route${routeCount === 1 ? "" : "s"} loaded`);
-
-    return router;
 }
