@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production tsx src/index.ts",
     "dev": "NODE_ENV=development tsx watch src/index.ts",
-    "test": "jest --colors --coverage --config tests/jest.config.ts --detectOpenHandles",
+    "test": "jest --colors --coverage --detectOpenHandles",
     "lint": "eslint --ext .ts,.tsx src",
     "format": "prettier --write src/**/*.ts"
   },

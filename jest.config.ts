@@ -1,9 +1,10 @@
 import type { Config } from "jest";
 
 const config: Config = {
-    rootDir: "../",
+    rootDir: "./",
     moduleFileExtensions: ["ts", "tsx", "js"],
     coveragePathIgnorePatterns: ["/node_modules/"],
+    coverageDirectory: "./coverage",
     transform: {
         "^.+\\.(ts|tsx)$": ["esbuild-jest", { sourcemap: true }],
     },

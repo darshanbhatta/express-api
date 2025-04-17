@@ -34,7 +34,7 @@ function registerRouteHandlers(dir: string, router: Router) {
 
         if (fileStat.isDirectory()) {
             registerRouteHandlers(filePath, router);
-        } else if (extname(file) === ".ts" || extname(file) === ".js") {
+        } else if ((extname(file) === ".ts" || extname(file) === ".js") && !file.includes(".test.")) {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const routeHandler = require(filePath);
 

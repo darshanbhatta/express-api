@@ -6,7 +6,7 @@ const db = new Database({
     url: process.env.MONGO_URI,
 });
 
-describe("Test the example routes", () => {
+describe("Test the addPost route", () => {
     beforeAll(async () => {
         await setupApp(db);
     });
@@ -15,7 +15,7 @@ describe("Test the example routes", () => {
         const randomString = (Math.random() + 1).toString(36).substring(7);
 
         // call the api and see if it returns the expected response
-        const res = await request(app).get(`/example/add/${randomString}`);
+        const res = await request(app).get(`/posts/add/${randomString}`);
         expect(res.status).toBe(200);
 
         // check if the value is in the db

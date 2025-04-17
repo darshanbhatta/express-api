@@ -5,6 +5,8 @@ import Database from "./lib/Database";
 import initializeBaseMiddlewares from "./middlewares";
 import logger from "./lib/Logger";
 import { loadRoutes } from "./lib/routeLoader";
+import { route as defaultRoute } from "./routes/default.route";
+
 const app = express();
 
 const PORT = process.env.PORT || 8080;
@@ -19,11 +21,7 @@ export async function setupApp(db: Database) {
     // Connect to MongoDB
     await db.connect();
 
-    app.get("/", (_, res) =>
-        res.json({
-            message: `${process.env.npm_package_name} connected @ ${new Date().toISOString()}`,
-        })
-    );
+    app.get("/", defaultRoute.handler.validator, defaultRoute.handler.handler);
 
     app.use("/", loadRoutes());
 }
