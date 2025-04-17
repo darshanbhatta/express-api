@@ -16,15 +16,9 @@
         "sourceType": "module"
     },
     "globals": {},
-    "plugins": [
-        "promise",
-        "node",
-        "prettier"
-    ],
+    "plugins": ["promise", "node", "prettier"],
     "rules": {
-        "prettier/prettier": [
-            "error"
-        ],
+        "prettier/prettier": ["error"],
         "no-extra-parens": [
             "warn",
             "all",
@@ -34,15 +28,8 @@
         ],
         "accessor-pairs": "warn",
         "array-callback-return": "error",
-        "curly": [
-            "error",
-            "multi-line",
-            "consistent"
-        ],
-        "dot-location": [
-            "error",
-            "property"
-        ],
+        "curly": ["error", "multi-line", "consistent"],
+        "dot-location": ["error", "property"],
         "dot-notation": "error",
         "eqeqeq": "error",
         "no-console": "warn",
@@ -106,10 +93,7 @@
         ],
         "key-spacing": "error",
         "keyword-spacing": "error",
-        "max-depth": [
-            "error",
-            8
-        ],
+        "max-depth": ["error", 8],
         // "max-len": ["error", 100, 2],
         "max-nested-callbacks": [
             "error",
@@ -124,12 +108,7 @@
             }
         ],
         "new-cap": "off",
-        "newline-per-chained-call": [
-            "error",
-            {
-                "ignoreChainWithDepth": 3
-            }
-        ],
+        "newline-per-chained-call": "off",
         "no-array-constructor": "error",
         "no-bitwise": "warn",
         "no-inline-comments": "error",
@@ -155,19 +134,10 @@
                 "consistent": true
             }
         ],
-        "object-curly-spacing": [
-            "error",
-            "always"
-        ],
+        "object-curly-spacing": ["error", "always"],
         "operator-assignment": "error",
-        "padded-blocks": [
-            "error",
-            "never"
-        ],
-        "quote-props": [
-            "error",
-            "as-needed"
-        ],
+        "padded-blocks": ["error", "never"],
+        "quote-props": ["error", "as-needed"],
         "quotes": [
             "error",
             "double",
@@ -228,10 +198,7 @@
         "node/no-missing-require": "off",
         "node/no-unpublished-bin": "error",
         "node/no-deprecated-api": "error",
-        "node/exports-style": [
-            "error",
-            "module.exports"
-        ],
+        "node/exports-style": ["error", "module.exports"],
         "no-var": "error",
         "@typescript-eslint/member-delimiter-style": "error",
         "@typescript-eslint/no-namespace": "off",
