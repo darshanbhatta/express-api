@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
         "esModuleInterop": true,
-        "target": "es2017",
+        "allowSyntheticDefaultImports": true,
+        "target": "ES2022",
         "strict": true,
-        "module": "commonjs",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
         "noImplicitAny": false,
         "allowJs": false,
-        "moduleResolution": "node",
         "sourceMap": false,
         "typeRoots": [
             "./node_modules/@types",
@@ -16,6 +17,9 @@
         "baseUrl": "./",
         "paths": {
             "src/*": [
+                "./src/*",
+            ],
+            "@/*": [
                 "./src/*",
             ],
             "*": [

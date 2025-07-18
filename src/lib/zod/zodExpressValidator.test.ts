@@ -2,6 +2,7 @@
  * Src code from https://github.com/Aquila169/zod-express-middleware
  */
 
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
     processRequest,
     processRequestBody,
@@ -15,7 +16,7 @@ import {
 import { z } from "zod";
 import { NextFunction, Request, Response } from "express";
 
-const nextFunction: NextFunction = jest.fn();
+const nextFunction: NextFunction = vi.fn();
 
 function mockRequest({
     body,
@@ -32,10 +33,10 @@ function mockRequest({
         params,
     };
 }
-const sendMock = jest.fn();
+const sendMock = vi.fn();
 function mockResponse(): Partial<Response> {
     return {
-        status: jest.fn(() => ({ send: sendMock } as any)),
+        status: vi.fn(() => ({ send: sendMock } as any)),
     };
 }
 

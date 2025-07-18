@@ -13,11 +13,11 @@ export interface RouteConfig {
     };
 }
 
-export function loadRoutes(): Router {
+export async function loadRoutes(): Promise<Router> {
     const router = Router();
     const routesPath = "src/routes";
 
-    registerRouteHandlers(routesPath, router);
+    await registerRouteHandlers(routesPath, router);
 
     const routeCount = router.stack.length;
     logger.info(`${routeCount} route${routeCount === 1 ? "" : "s"} loaded`);
@@ -25,25 +25,30 @@ export function loadRoutes(): Router {
     return router;
 }
 
-function registerRouteHandlers(dir: string, router: Router) {
+async function registerRouteHandlers(dir: string, router: Router): Promise<void> {
     const files = readdirSync(dir);
 
-    files.forEach(file => {
+    for (const file of files) {
         const filePath = join(dir, file);
         const fileStat = statSync(filePath);
 
         if (fileStat.isDirectory()) {
-            registerRouteHandlers(filePath, router);
+            await registerRouteHandlers(filePath, router);
         } else if ((extname(file) === ".ts" || extname(file) === ".js") && !file.includes(".test.")) {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const routeHandler = require(filePath);
+            try {
+                // Convert file path to proper ESM import path (file:// URL for absolute paths)
+                const fileUrl = new URL(`file://${process.cwd()}/${filePath}`).href;
+                const routeHandler = await import(fileUrl);
 
-            if (routeHandler?.route) {
-                const { method, path, middlewares = [], handler } = routeHandler.route;
-                router[method](path, handler.validator, ...middlewares, handler.handler);
-            } else {
-                logger.warn(`Missing route in ${filePath}`);
+                if (routeHandler?.route) {
+                    const { method, path, middlewares = [], handler } = routeHandler.route;
+                    router[method](path, handler.validator, ...middlewares, handler.handler);
+                } else {
+                    logger.warn(`Missing route in ${filePath}`);
+                }
+            } catch (error) {
+                logger.error(`Failed to load route from ${filePath}:`, error);
             }
         }
-    });
+    }
 }

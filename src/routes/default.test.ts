@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import request from "supertest";
 import app, { setupApp } from "src/app";
 import Database from "src/database";

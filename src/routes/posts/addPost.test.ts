@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import Database from "src/database";
 import request from "supertest";
 import app, { setupApp } from "src/app";
@@ -14,15 +15,12 @@ describe("Test the addPost route", () => {
     it.only("It should add item to DB and respond with 200", async () => {
         const randomString = (Math.random() + 1).toString(36).substring(7);
 
-        // call the api and see if it returns the expected response
         const res = await request(app).get(`/posts/add/${randomString}`);
         expect(res.status).toBe(200);
 
-        // check if the value is in the db
         const result = await db.models.posts.findOne({ title: randomString });
         expect(result).toBeTruthy();
 
-        // delete the value from the db
         await db.models.posts.deleteOne({ title: randomString });
     });
 

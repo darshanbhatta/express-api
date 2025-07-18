@@ -25,7 +25,7 @@ export async function setupApp(db: Database) {
 
     logger.info("loading routes");
     app.get("/", defaultRoute.handler.validator, defaultRoute.handler.handler);
-    app.use("/", loadRoutes());
+    app.use("/", await loadRoutes());
 }
 
 export async function startListening() {
