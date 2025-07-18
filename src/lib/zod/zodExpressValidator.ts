@@ -4,7 +4,9 @@
  */
 
 import { Request, RequestHandler, Response, ZodRequestSchema } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
+
+// Use Express.Request's built-in params type
+type ParamsDictionary = Request["params"];
 import { z, ZodEffects, ZodError, ZodSchema, ZodType, ZodTypeDef } from "zod";
 
 type NonReadOnly<T> = { -readonly [P in keyof T]: NonReadOnly<T[P]> };

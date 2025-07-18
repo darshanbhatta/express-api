@@ -1,12 +1,14 @@
-import Database from "../src/lib/Database";
-import Logger from "../src/lib/Logger";
+import type Database from "src/database";
+import type Logger from "src/lib/express/Logger";
 import { z } from "zod";
 import { EmptyObject } from "./schema";
 
-declare module "express-serve-static-core" {
-    interface Request {
-        db: Database;
-        logger: typeof Logger;
+declare global {
+    namespace Express {
+        interface Request {
+            db: Database;
+            logger: typeof Logger;
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 import request from "supertest";
 import app, { setupApp } from "src/app";
-import Database from "src/lib/Database";
+import Database from "src/database";
 
 const db = new Database({
     url: process.env.MONGO_URI,

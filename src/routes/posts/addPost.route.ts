@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { rateLimiter } from "src/middlewares/rateLimiter.middleware";
-import { RouteConfig } from "src/lib/routeLoader";
-import { createHandler } from "src/lib/createHandler";
+import { RouteConfig } from "src/lib/express/routeLoader";
+import { createHandler } from "src/lib/express/createHandler";
 
 const handler = createHandler(
     {

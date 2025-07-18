@@ -1,6 +1,6 @@
 import { startListening, setupApp } from "./app";
-import Database from "./lib/Database";
-import logger from "./lib/Logger";
+import Database from "./database";
+import logger from "./lib/express/Logger";
 
 start();
 

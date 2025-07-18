@@ -26,11 +26,11 @@ To start the app without Docker:
 
 2. Install dependencies:
 
-`npm install`
+`pnpm install`
 
 3. Start the app:
 
-`npm run dev-raw`
+`pnpm dev`
 
 ## Development
 
@@ -104,4 +104,4 @@ To add new tests:
 
 Run the tests with:
 
-`npm test`
+`pnpm test`
